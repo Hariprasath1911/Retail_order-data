@@ -54,8 +54,8 @@ def Retail_order():
         y1.order_year=y2.order_year+1;
         """,
         "Product Performance":"""
-        select p.product_id,p.category, round(sum(o.sale_price)::numeric,2)as 
-        total_revenue,round(sum(o.profit)::numeric,2) as total_profit, case 
+        select p.product_id,p.category, round(sum(o.sale_price),2)as 
+        total_revenue,round(sum(o.profit),2) as total_profit, case 
         when sum(o.sale_price) = 0 then 0 else round((sum(o.profit)/ 
         sum(o.sale_price))*100) end as profit_margin,case when sum(sale_price) 
         > 10000 then 'High perfomer' when sum(sale_price) between 5000 and 10000 then 'Mid Performer' else 'Low Performer'
