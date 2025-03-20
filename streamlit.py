@@ -59,7 +59,7 @@ def Retail_order():
         when sum(o.sale_price) = 0 then 0 else round((sum(o.profit)/ 
         sum(o.sale_price))*100) end as profit_margin,case when sum(sale_price) 
         > 10000 then 'High perfomer' when sum(sale_price) between 5000 and 10000 then 'Mid Performer' else 'Low Performer'
-        end as PerformanceCategory,rank() over(order by round(sum(o.sale_price)::numeric,2) desc)
+        end as PerformanceCategory,rank() over(order by sum(o.sale_price) desc)
         from product_data p join order_data o on p.product_id=o.product_id group 
         by p.product_id;
         """,
