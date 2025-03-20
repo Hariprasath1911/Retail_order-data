@@ -6,8 +6,8 @@ import os
 # Function to connect to the PostgreSQL database
 @st.cache_data
 def load_data():
-    df1 = pd.read_csv("order.csv")  # Replace with actual file names
-    df2 = pd.read_csv("product.csv")
+    df1 = pd.read_csv(r"order.csv")  
+    df2 = pd.read_csv(r"product.csv")
     return df1, df2
 
 df1, df2 = load_data()
