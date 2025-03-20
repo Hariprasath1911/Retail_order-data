@@ -64,7 +64,7 @@ def Retail_order():
         by p.product_id;
         """,
         "Regional Sales Analysis":"""
-        select region, round(sum(order_id)::numeric, 2) as Total_order, 
+        select region, round(sum(order_id), 2) as Total_order, 
         round(sum(sale_price),2) as Total_sale, sum(profit) as 
         Total_profit,round((sum(profit)/ sum(sale_price))*100) as profit_margin,
         rank() over(order by round(sum(sale_price),2) desc) from 
@@ -72,9 +72,9 @@ def Retail_order():
         """,
         "Discount Analysis":"""
         select product_id,sum(quantity) as total_quantity,sum(discount_percent)
-        as Total_D_percent, round(sum(discount_price)::numeric,2) as 
+        as Total_D_percent, round(sum(discount_price),2) as 
         total_discount,round(sum(sale_price),2) as total_sale,
-        round((sum(discount_price)/sum(sale_price)::numeric)* 100,2)
+        round((sum(discount_price)/sum(sale_price))* 100,2)
         as discountimpactpercentage from order_data group by product_id having
         sum(discount_percent)>20 order by discountimpactpercentage desc;
         """
@@ -247,24 +247,10 @@ def My_Query():
                 st.error(f"Failed to fetch results for '{desc}'.")
         except Exception as e:
             st.error(f"Error running query '{desc}': {e}")
-def write_query():
-    st.title("SQL Query Executor")
-    st.write("Write and execute your SQL queries below.")
-    query = st.text_area("Enter your SQL query:", height=200)
 
-# Execute button
-    if st.button("Run Query"):
-        try:
-            with run_query() as conn:
-                result = pd.read_sql_query(query, conn)
-            st.success("Query executed successfully!")
-            st.write(result)
-        
-        except Exception as e:
-            st.error(f"An error occurred: {e}")
 
 # Dropdown for navigation
-page = st.sidebar.selectbox("Select a page", ["Retail_order", "Query", "My_Query","write_query"])
+page = st.sidebar.selectbox("Select a page", ["Retail_order", "Query", "My_Query"])
 
 # Render the selected page
 if page == "Retail_order":
